@@ -36,8 +36,9 @@ jobs:
         if: github.ref == 'refs/heads/main'
         id: bump_version
         run: |
-          CURRENT_VERSION=$(poetry version -s)
-          NEW_VERSION=$(poetry version patch | awk '{print $2}')
+          CURRENT_VERSION="$(poetry version -s)"
+          poetry version patch
+          NEW_VERSION="$(poetry version -s)"
           echo "New version: $NEW_VERSION"
 
           # Update __init__.py
