@@ -36,18 +36,26 @@ jobs:
         if: github.ref == 'refs/heads/main'
         id: bump_version
         run: |
+          # Get the current and new version
           CURRENT_VERSION="$(poetry version -s)"
           poetry version patch
           NEW_VERSION="$(poetry version -s)"
           echo "New version: $NEW_VERSION"
 
-          # Update __init__.py
-          echo "__version__ = \"$NEW_VERSION\"" > docks/__init__.py
+          # Update __version__ in __init__.py without overwriting the file
+          INIT_FILE="docks/__init__.py"
+          if grep -q "^__version__" "$INIT_FILE"; then
+            # Update the existing __version__ line
+            sed -i "s/^__version__ = .*/__version__ = \"$NEW_VERSION\"/" "$INIT_FILE"
+          else
+            # Add __version__ line if not present
+            echo "__version__ = \"$NEW_VERSION\"" >> "$INIT_FILE"
+          fi
 
           # Commit the updated version
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add pyproject.toml docks/__init__.py
+          git add pyproject.toml "$INIT_FILE"
           git commit -m "Bump version to $NEW_VERSION"
           git tag v$NEW_VERSION
           git push origin main --tags
