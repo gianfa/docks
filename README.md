@@ -3,10 +3,10 @@
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 <!-- TODO: add Pypi version -->
-<!-- TODO: add build status -->
-<!-- TODO: add License -->
+![publish workflow](https://github.com/gianfa/docks/actions/workflows/publish.yml/badge.svg?branch=main)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**docks** is a Python framework designed to generate Markdown documentation for your Dockerfiles. It extracts key elements such as base images, ARG/ENV variables, exposed ports, and copied/added files, producing clear, structured documentation.
+**docks** is a Python framework designed to generate Markdown documentation for your Dockerfiles. It extracts key elements such as base images, `ARG`/`ENV` variables, exposed ports, and copied/added files, producing clear, structured documentation.
 
 - [Features ✨](#features-)
 - [Installation 🚀](#installation-)
@@ -75,7 +75,7 @@ generate_markdown(dockerfile_path, output_path)
 ### ARG/ENV Variables
 
 - Include a block comment directly above the variable.
-- Start the comment with the variable name followed by : for docstring extraction.
+- Start the comment with the variable name followed by `:` for docstring extraction.
 - Optionally include a reference using `@ref:`.
 
 #### Example
@@ -88,8 +88,8 @@ ARG MY_VAR=default
 
 ### EXPOSE Ports
 
-Include a comment directly above the EXPOSE command.
-Start with the port number followed by : for the description.
+Include a comment directly above the `EXPOSE` command.
+Start with the port number followed by `:` for the description.
 
 #### Example
 
@@ -100,7 +100,7 @@ EXPOSE 8080
 
 ### COPY/ADD Files
 
-Add a comment directly above the COPY or ADD command for context.
+Add a comment directly above the `COPY` or `ADD` command for context.
 
 #### Example
 
