@@ -42,7 +42,7 @@ jobs:
           echo "New version: $NEW_VERSION"
 
           # Update __init__.py
-          echo "__version__ = '$NEW_VERSION'" > docks/__init__.py
+          echo "__version__ = \"$NEW_VERSION\"" > docks/__init__.py
 
           # Commit the updated version
           git config user.name "GitHub Actions"
