@@ -1,0 +1,89 @@
+name: CI/CD Pipeline
+
+on:
+  push: # Trigger on any push
+    branches:
+      - "*" # For all branches
+  workflow_dispatch: # Allow manual runs
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      # Step 3: Install Poetry
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry --version
+
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: poetry install
+
+      # Step 5: Run linters and tests
+      - name: Run linters and tests
+        run: |
+          poetry run black --check .
+          # poetry run flake8
+          poetry run pytest
+
+      # Step 6: Prepare for release (if on main)
+      - name: Prepare version bump
+        if: github.ref == 'refs/heads/main'
+        id: bump_version
+        run: |
+          CURRENT_VERSION=$(poetry version -s)
+          NEW_VERSION=$(poetry version patch | awk '{print $2}')
+          echo "New version: $NEW_VERSION"
+
+          # Update __init__.py
+          echo "__version__ = '$NEW_VERSION'" > src/<package_name>/__init__.py
+
+          # Commit the updated version
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add pyproject.toml src/<package_name>/__init__.py
+          git commit -m "Bump version to $NEW_VERSION"
+          git tag v$NEW_VERSION
+          git push origin main --tags
+
+      # Step 7: Upload build artifacts
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: package-artifacts
+          path: dist/
+
+  publish:
+    needs: prepare # Run only after the prepare job
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' # Only publish from main
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Download build artifacts
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: package-artifacts
+
+      # Step 3: Publish to PyPI
+      - name: Publish to PyPI
+        env:
+          POETRY_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry config pypi-token.pypi $POETRY_PASSWORD
+          poetry publish --build
