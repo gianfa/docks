@@ -60,6 +60,9 @@ jobs:
           git tag v$NEW_VERSION
           git push origin main --tags
 
+      - name: Build package
+        run: poetry build && ls dist/
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
