@@ -94,6 +94,11 @@ jobs:
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry publish -r pypi dist/*
+          poetry publish -r pypi
         working-directory: ${{ github.workspace }}
 
+      # - name: Publish to PyPI
+      #   env:
+      #     TWINE_USERNAME: __token__
+      #     TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+      #   run: twine upload dist/*
