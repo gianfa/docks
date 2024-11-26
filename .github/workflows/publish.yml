@@ -84,15 +84,15 @@ jobs:
           name: package-artifacts
           path: dist/
 
-      - run: poetry shell
-
       - name: (dbg)| ls dist
         run: ls dist/
 
-      - name: Publish to PyPI
+      - name: Poetry config
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry publish --build
+      
+      - name: Poetry publish
+        run: poetry shell && poetry publish --build
