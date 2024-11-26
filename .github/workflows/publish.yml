@@ -88,14 +88,16 @@ jobs:
         run: tree -L 3
         working-directory: ${{ github.workspace }}
 
-      # - name: Poetry config
-      #   env:
-      #     PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-      #   run: |
-      #     curl -sSL https://install.python-poetry.org | python3 -
-      #     poetry config pypi-token.pypi $PYPI_TOKEN
-      #     poetry publish -r pypi
-      #   working-directory: ${{ github.workspace }}
+      - name: Poetry config
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry config pypi-token.pypi $PYPI_TOKEN
+
+      - name: Poetry config
+        run: poetry publish -r pypi
+        working-directory: ${{ github.workspace }}
 
       - name: Publish to PyPI
         env:
