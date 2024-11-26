@@ -33,7 +33,7 @@ jobs:
           poetry run pytest
 
       - name: Prepare version bump
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/fix/pipeline'
         id: bump_version
         run: |
           # Get the current and new version
@@ -72,17 +72,20 @@ jobs:
   publish:
     needs: prepare
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/fix/pipeline'
     steps:
 
       - name: Checkout code
         uses: actions/checkout@v3
-
+      
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
           name: package-artifacts
           path: dist/
+
+      - name: (dbg)| ls dist
+        run: ls dist/
 
       - name: Publish to PyPI
         env:
