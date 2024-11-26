@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "docks"
-version = "0.1.9"
+version = "0.1.10"
 description = "A simple automatic Dockerfile documentation generator"
 authors = ["gianfaProm <gianfrancesco.angelini@prometeia.com>"]
 readme = "README.md"
