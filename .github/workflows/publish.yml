@@ -84,15 +84,16 @@ jobs:
           name: package-artifacts
           path: dist/
 
-      - name: (dbg)| ls dist
-        run: ls dist/
+      - name: (dbg)| tree
+        run: tree -L 3
+        working-directory: ${{ github.workspace }}
 
       - name: Poetry config
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          echo "PWD: $PWD"
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry publish --build
+          poetry publish
+        working-directory: ${{ github.workspace }}/docks
 
