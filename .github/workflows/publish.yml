@@ -29,7 +29,6 @@ jobs:
       - name: Run linters and tests
         run: |
           poetry run black --check .
-          # poetry run flake8
           poetry run pytest
 
       - name: Prepare version bump
@@ -40,7 +39,7 @@ jobs:
           CURRENT_VERSION="$(poetry version -s)"
           poetry version patch
           NEW_VERSION="$(poetry version -s)"
-          echo "New version: $NEW_VERSION"
+          echo "New version: $NEW_VERSION" >> $GITHUB_ENV
 
           # Update __version__ in __init__.py without overwriting the file
           INIT_FILE="docks/__init__.py"
@@ -52,11 +51,21 @@ jobs:
             echo "__version__ = \"$NEW_VERSION\"" >> "$INIT_FILE"
           fi
 
-          # Commit the updated version
+      - name: Update version badge in README
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # Update the badge in README.md
+          README_FILE="README.md"
+          BADGE_URL="https://img.shields.io/badge/version-$NEW_VERSION-blue.svg"
+          sed -i "s|https://img.shields.io/badge/version-.*-blue.svg|$BADGE_URL|" $README_FILE
+
+      - name: Push changes
+        if: github.ref == 'refs/heads/main'
+        run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add pyproject.toml "$INIT_FILE"
-          git commit -m "Bump version to $NEW_VERSION"
+          git add pyproject.toml docks/__init__.py README.md
+          git commit -m "Bump version to $NEW_VERSION and update badge"
           git tag v$NEW_VERSION
           git push origin main --tags
 
@@ -72,12 +81,10 @@ jobs:
   publish:
     needs: prepare
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     steps:
-
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
