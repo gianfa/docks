@@ -84,6 +84,8 @@ jobs:
           name: package-artifacts
           path: dist/
 
+      - run: poetry shell
+
       - name: (dbg)| ls dist
         run: ls dist/
 
