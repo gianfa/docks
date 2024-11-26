@@ -95,9 +95,9 @@ jobs:
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
 
-      - name: Poetry config
-        run: poetry publish -r pypi
-        working-directory: ${{ github.workspace }}
+      # - name: Poetry config
+      #   run: poetry publish -r pypi
+      #   working-directory: ${{ github.workspace }}
 
       - name: Publish to PyPI
         env:
