@@ -95,5 +95,5 @@ jobs:
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
           poetry publish
-        working-directory: ${{ github.workspace }}/docks
+        working-directory: ${{ github.workspace }}
 
