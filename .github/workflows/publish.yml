@@ -93,5 +93,4 @@ jobs:
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
-          cd dist/ && poetry publish
-
+          poetry publish --build
