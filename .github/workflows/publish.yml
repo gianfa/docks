@@ -83,10 +83,10 @@ jobs:
         with:
           name: package-artifacts
 
-      # - name: Publish to PyPI
-      #   env:
-      #     POETRY_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      #   run: |
-      #     curl -sSL https://install.python-poetry.org | python3 -
-      #     poetry config pypi-token.pypi $POETRY_PASSWORD
-      #     poetry publish --build
+      - name: Publish to PyPI
+        env:
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          poetry config pypi-token.pypi $PYPI_TOKEN
+          poetry publish
