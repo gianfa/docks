@@ -51,14 +51,6 @@ jobs:
             echo "__version__ = \"$NEW_VERSION\"" >> "$INIT_FILE"
           fi
 
-      - name: Update version badge in README
-        if: github.ref == 'refs/heads/main'
-        run: |
-          # Update the badge in README.md
-          README_FILE="README.md"
-          BADGE_URL="https://img.shields.io/badge/version-$NEW_VERSION-blue.svg"
-          sed -i "s|https://img.shields.io/badge/version-.*-blue.svg|$BADGE_URL|" $README_FILE
-
       - name: Push changes
         if: github.ref == 'refs/heads/main'
         run: |

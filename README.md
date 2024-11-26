@@ -4,6 +4,7 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
 <!-- TODO: add Pypi version -->
 ![publish workflow](https://github.com/gianfa/docks/actions/workflows/publish.yml/badge.svg?branch=main)
+[![PyPI version](https://img.shields.io/pypi/v/docks.svg)](https://pypi.org/project/docks/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **docks** is a Python framework designed to generate Markdown documentation for your Dockerfiles. It extracts key elements such as base images, `ARG`/`ENV` variables, exposed ports, and copied/added files, producing clear, structured documentation.
