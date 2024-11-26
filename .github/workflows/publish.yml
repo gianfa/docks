@@ -57,8 +57,8 @@ jobs:
           git config user.email "actions@github.com"
           git add pyproject.toml "$INIT_FILE"
           git commit -m "Bump version to $NEW_VERSION"
-          # git tag v$NEW_VERSION
-          # git push origin main --tags
+          git tag v$NEW_VERSION
+          git push origin main --tags
 
       - name: Build package
         run: poetry build && ls dist/
