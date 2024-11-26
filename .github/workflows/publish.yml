@@ -85,7 +85,7 @@ jobs:
 
       - name: Publish to PyPI
         env:
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
