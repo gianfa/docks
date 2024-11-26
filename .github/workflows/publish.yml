@@ -39,7 +39,7 @@ jobs:
           CURRENT_VERSION="$(poetry version -s)"
           poetry version patch
           NEW_VERSION="$(poetry version -s)"
-          echo "New version: $NEW_VERSION" >> $GITHUB_ENV
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
           # Update __version__ in __init__.py without overwriting the file
           INIT_FILE="docks/__init__.py"
