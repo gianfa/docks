@@ -91,8 +91,8 @@ jobs:
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
+          echo "PWD: $PWD"
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
-      
-      - name: Poetry publish
-        run: poetry shell && poetry publish --build
+          poetry publish --build
+
