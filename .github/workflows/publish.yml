@@ -84,13 +84,20 @@ jobs:
           name: package-artifacts
           path: dist/
 
-      - name: (dbg)| ls dist
-        run: ls dist/
+      - name: (dbg)| tree
+        run: tree -L 3
+        working-directory: ${{ github.workspace }}
 
-      - name: Publish to PyPI
+      - name: Poetry config
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
           poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry publish --build
+          poetry install --with dev
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: poetry run twine upload dist/*
