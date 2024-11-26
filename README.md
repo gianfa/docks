@@ -13,7 +13,10 @@
   - [Using Poetry](#using-poetry)
   - [Using Pip](#using-pip)
 - [Usage 🛠️](#usage-️)
-  - [Example: Generate Documentation from a Dockerfile](#example-generate-documentation-from-a-dockerfile)
+  - [Via CLI](#via-cli)
+    - [CLI Arguments](#cli-arguments)
+  - [Via Python](#via-python)
+    - [Example: Generate Documentation from a Dockerfile](#example-generate-documentation-from-a-dockerfile)
 - [Dockerfile Docstring Convention 📝](#dockerfile-docstring-convention-)
   - [ARG/ENV Variables](#argenv-variables)
     - [Example](#example)
@@ -52,7 +55,28 @@ pip install docks
 
 ## Usage 🛠️
 
-### Example: Generate Documentation from a Dockerfile
+### Via CLI
+
+The `docks` CLI allows you to quickly generate Markdown documentation for a Dockerfile without writing code.
+
+Here is all you have to do in order to generate the documentation.
+
+```bash
+docks <dockerfile> <output>
+# e.g.
+# docks myproject/Dockerfile myproject/dockerfile-doc.md
+```
+
+#### CLI Arguments
+
+- `dockerfile`: Path to the Dockerfile to document.
+- `output`: Path to save the generated Markdown documentation.
+
+### Via Python
+
+You can also easily create the documentation programmatically via Python.
+
+#### Example: Generate Documentation from a Dockerfile
 
 1. Ensure you have a valid Dockerfile in your project.
 2. Run the following Python script
