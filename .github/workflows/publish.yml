@@ -23,8 +23,8 @@ jobs:
           curl -sSL https://install.python-poetry.org | python3 -
           poetry --version
 
-      - name: Install dependencies
-        run: poetry install
+      - name: Install dependencies with dev
+        run: poetry install -E dev
 
       - name: Run linters and tests
         run: |
