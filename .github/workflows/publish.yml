@@ -104,11 +104,12 @@ jobs:
             @semantic-release/github \
             @semantic-release/commit-analyzer \
             @semantic-release/release-notes-generator \
-            @semantic-release/python
+            semantic-release-pypi
 
       - name: Run semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run: semantic-release
