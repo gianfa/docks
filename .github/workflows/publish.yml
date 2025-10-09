@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "$PYTHON_VERSION"
+          python-version: "${{ env.PYTHON_VERSION }}"
 
       - name: Install Poetry
         run: |
@@ -94,7 +94,7 @@ jobs:
       - name: Setup Python (for build)
         uses: actions/setup-python@v5
         with:
-          python-version: "$PYTHON_VERSION"
+          python-version: "${{ env.PYTHON_VERSION }}"
 
       - name: Install semantic-release + plugins
         run: |
