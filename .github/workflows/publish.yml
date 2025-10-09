@@ -6,6 +6,9 @@ on:
       - "**"
   workflow_dispatch:
 
+env:
+  PYTHON_VERSION: "3.11.13"
+
 jobs:
   prepare:
     runs-on: ubuntu-latest
@@ -16,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "${{ env.PYTHON_VERSION }}"
 
       - name: Install Poetry
         run: |
@@ -73,31 +76,39 @@ jobs:
   publish:
     needs: prepare
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/heads/main') || startsWith(github.ref, 'refs/tags/v')
+    if: >
+      contains(fromJson('[
+        "refs/heads/main",
+        "refs/heads/develop"
+      ]'), github.ref)
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          name: package-artifacts
-          path: dist/
+          node-version: "20"
 
-      - name: (dbg)| tree
-        run: tree -L 3
-        working-directory: ${{ github.workspace }}
+      - name: Setup Python (for build)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "${{ env.PYTHON_VERSION }}"
 
-      - name: Poetry config
-        env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      - name: Install semantic-release + plugins
         run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-          poetry config pypi-token.pypi $PYPI_TOKEN
-          poetry install --with dev
+          npm i -g semantic-release \
+            @semantic-release/changelog \
+            @semantic-release/git \
+            @semantic-release/github \
+            @semantic-release/commit-analyzer \
+            @semantic-release/release-notes-generator \
+            semantic-release-pypi
 
-      - name: Publish to PyPI
+      - name: Run semantic-release
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: poetry run twine upload dist/*
+        run: semantic-release
