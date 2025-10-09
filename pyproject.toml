@@ -1,25 +1,29 @@
-[tool.poetry]
+[project]
 name = "docks"
 version = "0.1.13"
 description = "A simple automatic Dockerfile documentation generator"
-authors = ["gianfaProm <gianfrancesco.angelini@prometeia.com>"]
 readme = "README.md"
+authors = [{ name = "gianfa", email = "gian.angelini@hotmail.com" }]
+requires-python = ">=3.9,<4.0"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-click = "^8.1.7"
+dependencies = [
+  "click>=8.1.7,<9.0.0",
+]
 
+[project.scripts]
+docks = "docks.cli:cli"
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.3"
-black = "^24.10.0"
-isort = "^5.13.2"
-flake8 = "^7.1.1"
-twine = "^5.1.1"
+[project.optional-dependencies]
+dev = [
+  "bandit (>=1.8.6,<2.0.0)",
+  "pip-audit (>=2.9.0,<3.0.0)",
+  "pytest>=8.3.3,<9.0.0",
+  "black>=24.10.0,<25.0.0",
+  "isort>=5.13.2,<6.0.0",
+  "flake8>=7.1.1,<8.0.0",
+  "twine>=5.1.1,<6.0.0",
+]
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-docks = "docks.cli:cli"
