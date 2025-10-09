@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  PYTHON_VERSION: "3.11"
+  PYTHON_VERSION: "3.11.13"
 
 jobs:
   prepare:
@@ -76,7 +76,12 @@ jobs:
   publish:
     needs: prepare
     runs-on: ubuntu-latest
-    if: contains(fromJson('["refs/heads/main", "refs/heads/develop", "feature/pipeline-semantic_release"]'), github.ref)
+    if: >
+      contains(fromJson('[
+        "refs/heads/main",
+        "refs/heads/develop",
+        "refs/heads/feature/pipeline-semantic_release"
+      ]'), github.ref)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
