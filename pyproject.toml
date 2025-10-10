@@ -1,6 +1,6 @@
 [project]
 name = "docks"
-version = "0.2.0b1"
+version = "0.2.0b2"
 description = "A simple automatic Dockerfile documentation generator"
 readme = "README.md"
 authors = [{ name = "gianfa", email = "gian.angelini@hotmail.com" }]
