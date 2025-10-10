@@ -1,8 +1,7 @@
 <!-- markdownlint-disable MD024 -->
 # Docks: Easy Dockerfile Documentation Generator 📜🐳
 
-[![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
-<!-- TODO: add Pypi version -->
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/docks)
 ![publish workflow](https://github.com/gianfa/docks/actions/workflows/publish.yml/badge.svg?branch=main)
 [![PyPI version](https://img.shields.io/pypi/v/docks.svg)](https://pypi.org/project/docks/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

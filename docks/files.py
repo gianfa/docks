@@ -1,3 +1,7 @@
+"""
+Extract files
+"""
+
 import re
 from typing import Optional
 
@@ -27,7 +31,8 @@ def extract_files(dockerfile_path: str) -> list[dict[str, Optional[str]]]:
             stripped = line.strip()
             # Accumulate comments for potential docstring
             if stripped.startswith("#"):
-                comment_block.append(stripped[1:].strip())
+                clean_comment = re.sub(r"^#+\s*", "", stripped).strip()
+                comment_block.append(clean_comment)
             elif stripped.startswith(("COPY", "ADD")):
                 # Extract command, source, and destination
                 parts = stripped.split(" ", 2)

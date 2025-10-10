@@ -1,3 +1,7 @@
+"""
+Extract ports
+"""
+
 import re
 from typing import Optional
 

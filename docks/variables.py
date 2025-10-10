@@ -1,3 +1,7 @@
+"""
+Extract variables
+"""
+
 import re
 from typing import Optional
 
