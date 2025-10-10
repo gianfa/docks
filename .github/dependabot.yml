@@ -1,0 +1,39 @@
+version: 2
+updates:
+  # ---- Python deps ----
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "04:00"       # UTC
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
+
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "04:00"       # UTC
+    target-branch: "main"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
+
+  # ---- GitHub Actions ----
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "04:00"       # UTC
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "04:00"       # UTC
+    target-branch: "main"
+    open-pull-requests-limit: 10
+    rebase-strategy: "auto"
